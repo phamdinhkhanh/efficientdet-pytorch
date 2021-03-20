@@ -225,11 +225,13 @@ def main():
     args.pretrained_backbone = not args.no_pretrained_backbone
     args.prefetcher = not args.no_prefetcher
     args.distributed = False
-    if 'WORLD_SIZE' in os.environ:
-        args.distributed = int(os.environ['WORLD_SIZE']) > 1
+    # if 'WORLD_SIZE' in os.environ:
+    #     args.distributed = int(os.environ['WORLD_SIZE']) > 1
     args.device = 'cuda:0'
     args.world_size = 1
     args.rank = 0  # global rank
+    print("args: ",  args)
+    print("args text: ", args_text)
     if args.distributed:
         args.device = 'cuda:%d' % args.local_rank
         torch.cuda.set_device(args.local_rank)
