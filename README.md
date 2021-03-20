@@ -489,3 +489,4 @@ NOTE: I've only tried submitting D7 to dev server for sanity check so far
 - [ ] Exploration of instance segmentation possibilities...
 
 If you are an organization is interested in sponsoring and any of this work, or prioritization of the possible future directions interests you, feel free to contact me (issue, LinkedIn, Twitter, hello at rwightman dot com). I will setup a github sponser if there is any interest.
+# efficient-det
