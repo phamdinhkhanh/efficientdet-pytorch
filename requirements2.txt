@@ -1,3 +1,4 @@
-timm
-omegaconf
-pycocotools
+timm>=0.3.2
+# an update version that fixes some bugs, incl issues with numpy >= 1.18
+pycocotools>=2.0.2
+omegaconf>=2.0
