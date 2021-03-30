@@ -67,7 +67,7 @@ add_bool_arg(parser, 'redundant-bias', default=None, help='override model config
 add_bool_arg(parser, 'soft-nms', default=None, help='override model config for soft-nms')
 parser.add_argument('--val-skip', type=int, default=0, metavar='N',
                     help='Skip every N validation samples.')
-parser.add_argument('--num-classes', type=int, default=None, metavar='N',
+parser.add_argument('--num-classes', type=int, default=14, metavar='N',
                     help='Override num_classes in model config if set. For fine-tuning from pretrained.')
 parser.add_argument('--pretrained', action='store_true', default=False,
                     help='Start with pretrained version of specified network (if avail)')
@@ -224,14 +224,19 @@ def main():
 
     args.pretrained_backbone = not args.no_pretrained_backbone
     args.prefetcher = not args.no_prefetcher
-    args.distributed = False
+    args.distributed = True
     if 'WORLD_SIZE' in os.environ:
+        os.environ['NCCL_DEBUG'] = 'INFO'
+        #os.environ['CUDA_VISIBLE_DEVICES'] = [0, 1]
         args.distributed = int(os.environ['WORLD_SIZE']) > 1
-    args.device = 'cuda:0'
+    args.device = 'cuda:1'
     args.world_size = 1
     args.rank = 0  # global rank
+    print("args: ",  args)
+    print("args text: ", args_text)
     if args.distributed:
         args.device = 'cuda:%d' % args.local_rank
+        print("args.device: ", args.device)
         torch.cuda.set_device(args.local_rank)
         torch.distributed.init_process_group(backend='nccl', init_method='env://')
         args.world_size = torch.distributed.get_world_size()
